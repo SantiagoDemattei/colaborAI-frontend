@@ -1,7 +1,7 @@
-const API_URL = 'http://localhost:8080/auth';
+import { API_URL } from './apiConfig';
 
 export async function register(user) {
-  const res = await fetch(`${API_URL}/register`, {
+  const res = await fetch(`${API_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user),
@@ -10,7 +10,7 @@ export async function register(user) {
 }
 
 export async function login(credentials) {
-  const res = await fetch(`${API_URL}/login`, {
+  const res = await fetch(`${API_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),
@@ -18,8 +18,9 @@ export async function login(credentials) {
   return res.json();
 }
 
-export function saveToken(token) {
+export function saveAuth(token, user) {
   localStorage.setItem('token', token);
+  localStorage.setItem('user', JSON.stringify(user));
 }
 
 export function getToken() {

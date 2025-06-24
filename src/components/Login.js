@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { login, saveToken } from '../services/authService';
+import { login, saveAuth } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -14,8 +14,8 @@ export default function Login() {
   const handleSubmit = async e => {
     e.preventDefault();
     const res = await login(form);
-    if (res.token) {
-      saveToken(res.token);
+    if (res.token && res.id && res.username) {
+      saveAuth(res.token, { id: res.id, username: res.username });
       setMessage('Login exitoso!');
       setTimeout(() => navigate('/dashboard'), 1000);
     } else {
