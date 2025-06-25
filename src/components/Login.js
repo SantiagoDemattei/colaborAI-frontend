@@ -13,13 +13,19 @@ export default function Login() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const res = await login(form);
-    if (res.token && res.id && res.username) {
-      saveAuth(res.token, { id: res.id, username: res.username });
-      setMessage('Login exitoso!');
-      setTimeout(() => navigate('/dashboard'), 1000);
-    } else {
-      setMessage(res.message || 'Error en login');
+    setMessage(''); // Limpiar mensaje anterior
+    
+    try {
+      const res = await login(form);
+      if (res.token && res.id && res.username) {
+        saveAuth(res.token, { id: res.id, username: res.username });
+        setMessage('Login exitoso!');
+        setTimeout(() => navigate('/dashboard'), 1000);
+      } else {
+        setMessage('Credenciales inválidas');
+      }
+    } catch (error) {
+      setMessage('Credenciales inválidas');
     }
   };
 
