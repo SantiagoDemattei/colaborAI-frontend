@@ -8,14 +8,18 @@ import Navbar from './components/Navbar';
 function PrivateRoute({ children }) {
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user'));
-  return token && user ? React.cloneElement(children, { token, ownerId: user.id }) : <Navigate to="/login" />;
+  return token && user ? React.cloneElement(children, { token, ownerId: user.id, user }) : <Navigate to="/login" />;
 }
 
 export default function App() {
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+  
   return (
     <Router>
       <Navbar
-        user={JSON.parse(localStorage.getItem('user'))}
+        user={user}
+        token={token}
         onLogout={() => {
           localStorage.removeItem('token');
           localStorage.removeItem('user');

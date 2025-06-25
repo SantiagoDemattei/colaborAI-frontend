@@ -19,36 +19,80 @@ export async function getTaskById(id, token) {
 }
 
 export async function createTask(task, projectId, token) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const taskData = {
+    ...task,
+    createdById: user.id
+  };
+  
   const res = await fetch(`${TASKS_URL}/project/${projectId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(task)
+    body: JSON.stringify(taskData)
   });
-  if (!res.ok) throw new Error('Error al crear la tarea');
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || 'Error al crear la tarea');
+  }
   return res.json();
 }
 
 export async function updateTask(id, task, token) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const taskData = {
+    ...task,
+    userId: user.id
+  };
+  
   const res = await fetch(`${TASKS_URL}/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(task)
+    body: JSON.stringify(taskData)
   });
-  if (!res.ok) throw new Error('Error al actualizar la tarea');
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || 'Error al actualizar la tarea');
+  }
   return res.json();
 }
 
 export async function deleteTask(id, token) {
-  const res = await fetch(`${TASKS_URL}/${id}`, {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const res = await fetch(`${TASKS_URL}/${id}?userId=${user.id}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) throw new Error('Error al eliminar la tarea');
   return true;
+}
+
+export async function assignTask(taskId, assigneeId, token) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const res = await fetch(`${TASKS_URL}/${taskId}/assign`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ assigneeId, userId: user.id })
+  });
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || 'Error al asignar la tarea');
+  }
+  return res.json();
+}
+
+export async function getAssignableUsers(projectId, token) {
+  const res = await fetch(`${TASKS_URL}/project/${projectId}/assignable-users`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener usuarios asignables');
+  return res.json();
 }
