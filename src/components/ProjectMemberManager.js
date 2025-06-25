@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   getProjectMembers, 
   getAvailableUsersForProject, 
@@ -19,14 +19,7 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
   const [processingId, setProcessingId] = useState(null);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (projectId) {
-      loadMembers();
-      if (isOwner) loadAvailableUsers();
-    }
-  }, [projectId, token, isOwner]);
-
-  const loadMembers = async () => {
+  const loadMembers = useCallback(async () => {
     try {
       const data = await getProjectMembers(projectId, token);
       setMembers(data);
@@ -35,16 +28,23 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId, token]);
 
-  const loadAvailableUsers = async () => {
+  const loadAvailableUsers = useCallback(async () => {
     try {
       const data = await getAvailableUsersForProject(projectId, ownerId, token);
       setAvailableUsers(data);
     } catch (err) {
       console.error('Error al cargar usuarios disponibles:', err);
     }
-  };
+  }, [projectId, ownerId, token]);
+
+  useEffect(() => {
+    if (projectId) {
+      loadMembers();
+      if (isOwner) loadAvailableUsers();
+    }
+  }, [projectId, isOwner, loadMembers, loadAvailableUsers]);
 
   const handleAddMember = async (e) => {
     e.preventDefault();

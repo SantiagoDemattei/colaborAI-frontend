@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ProjectList from './ProjectList';
 import ProjectForm from './ProjectForm';
 import TaskList from './TaskList';
@@ -23,14 +23,7 @@ export default function Dashboard({ token, ownerId, user }) {
   const [editProject, setEditProject] = useState(null);
   const [editTask, setEditTask] = useState(null);
 
-  useEffect(() => {
-    if (selectedProjectId && selectedProject) {
-      checkProjectPermissions();
-      setIsProjectOwner(selectedProject.ownerId === ownerId);
-    }
-  }, [selectedProjectId, selectedProject, ownerId]);
-
-  const checkProjectPermissions = async () => {
+  const checkProjectPermissions = useCallback(async () => {
     try {
       const canModify = await canUserModifyProject(selectedProjectId, ownerId, token);
       setCanModifyProject(canModify);
@@ -38,7 +31,14 @@ export default function Dashboard({ token, ownerId, user }) {
       console.error('Error al verificar permisos:', err);
       setCanModifyProject(false);
     }
-  };
+  }, [selectedProjectId, ownerId, token]);
+
+  useEffect(() => {
+    if (selectedProjectId && selectedProject) {
+      checkProjectPermissions();
+      setIsProjectOwner(selectedProject.ownerId === ownerId);
+    }
+  }, [selectedProjectId, selectedProject, ownerId, checkProjectPermissions]);
 
   const handleProjectCreatedOrUpdated = (project) => {
     setShowProjectForm(false);

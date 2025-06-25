@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import NotificationCenter from './NotificationCenter';
 
 export default function Navbar({ onLogout, user, token }) {
-  const [unreadCount, setUnreadCount] = useState(0);
-
   return (
     <nav style={{ 
       padding: '1rem', 
@@ -24,7 +22,6 @@ export default function Navbar({ onLogout, user, token }) {
           <NotificationCenter
             token={token}
             userId={user.id}
-            onUnreadCountChange={setUnreadCount}
           />
           
           <div style={{ display: 'flex', alignItems: 'center' }}>

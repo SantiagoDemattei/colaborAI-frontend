@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { getProjectsByOwner, deleteProject } from '../services/projectService';
 import ErrorHandler from '../utils/errorHandler';
 
@@ -10,9 +10,9 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
 
   useEffect(() => {
     loadProjects();
-  }, [ownerId, token]);
+  }, [loadProjects]);
 
-  const loadProjects = async () => {
+  const loadProjects = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getProjectsByOwner(ownerId, token);
@@ -22,7 +22,7 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [ownerId, token]);
 
   const handleDeleteProject = async (projectId, projectName) => {
     if (!window.confirm(`¿Estás seguro de que quieres eliminar el proyecto "${projectName}"?`)) {

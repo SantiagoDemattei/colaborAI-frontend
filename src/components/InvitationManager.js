@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getPendingRequests, getSentRequests, acceptConnectionRequest, rejectConnectionRequest } from '../services/invitationService';
 import ErrorHandler from '../utils/errorHandler';
 
@@ -10,11 +10,7 @@ export default function InvitationManager({ token, userId }) {
   const [processingId, setProcessingId] = useState(null);
   const [activeTab, setActiveTab] = useState('received');
 
-  useEffect(() => {
-    loadInvitations();
-  }, [userId, token]);
-
-  const loadInvitations = async () => {
+  const loadInvitations = useCallback(async () => {
     try {
       setLoading(true);
       const [pending, sent] = await Promise.all([
@@ -28,7 +24,11 @@ export default function InvitationManager({ token, userId }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId, token]);
+
+  useEffect(() => {
+    loadInvitations();
+  }, [loadInvitations]);
 
   const handleAcceptRequest = async (connectionId) => {
     try {

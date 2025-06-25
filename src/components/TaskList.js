@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { getTasksByProject, deleteTask, assignTask, getAssignableUsers } from '../services/taskService';
 import ErrorHandler from '../utils/errorHandler';
 
@@ -12,13 +12,7 @@ export default function TaskList({ projectId, token, onSelectTask, canModify }) 
   const [showAssignModal, setShowAssignModal] = useState(null);
   const [selectedAssignee, setSelectedAssignee] = useState('');
 
-  useEffect(() => {
-    if (!projectId) return;
-    loadTasks();
-    if (canModify) loadAssignableUsers();
-  }, [projectId, token, canModify]);
-
-  const loadTasks = async () => {
+  const loadTasks = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getTasksByProject(projectId, token);
@@ -28,16 +22,22 @@ export default function TaskList({ projectId, token, onSelectTask, canModify }) 
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId, token]);
 
-  const loadAssignableUsers = async () => {
+  const loadAssignableUsers = useCallback(async () => {
     try {
       const users = await getAssignableUsers(projectId, token);
       setAssignableUsers(users);
     } catch (err) {
       console.error('Error al cargar usuarios asignables:', err);
     }
-  };
+  }, [projectId, token]);
+
+  useEffect(() => {
+    if (!projectId) return;
+    loadTasks();
+    if (canModify) loadAssignableUsers();
+  }, [projectId, canModify, loadTasks, loadAssignableUsers]);
 
   const handleDeleteTask = async (taskId, taskTitle) => {
     if (!window.confirm(`¿Estás seguro de que quieres eliminar la tarea "${taskTitle}"?`)) {

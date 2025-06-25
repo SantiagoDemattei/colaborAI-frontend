@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   getUserNotifications, 
   getUnreadCount, 
@@ -15,6 +15,26 @@ export default function NotificationCenter({ token, userId, onUnreadCountChange 
   const [isOpen, setIsOpen] = useState(false);
   const [processingId, setProcessingId] = useState(null);
 
+  const loadNotifications = useCallback(async () => {
+    try {
+      const data = await getUserNotifications(userId, token);
+      setNotifications(data);
+    } catch (err) {
+      setError(ErrorHandler.handleApiError(err));
+    } finally {
+      setLoading(false);
+    }
+  }, [userId, token]);
+
+  const loadUnreadCount = useCallback(async () => {
+    try {
+      const count = await getUnreadCount(userId, token);
+      setUnreadCount(count);
+    } catch (err) {
+      console.error('Error al cargar contador de notificaciones:', err);
+    }
+  }, [userId, token]);
+
   useEffect(() => {
     if (userId) {
       loadNotifications();
@@ -28,33 +48,13 @@ export default function NotificationCenter({ token, userId, onUnreadCountChange 
 
       return () => clearInterval(interval);
     }
-  }, [userId, token, isOpen]);
+  }, [userId, isOpen, loadNotifications, loadUnreadCount]);
 
   useEffect(() => {
     if (onUnreadCountChange) {
       onUnreadCountChange(unreadCount);
     }
   }, [unreadCount, onUnreadCountChange]);
-
-  const loadNotifications = async () => {
-    try {
-      const data = await getUserNotifications(userId, token);
-      setNotifications(data);
-    } catch (err) {
-      setError(ErrorHandler.handleApiError(err));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadUnreadCount = async () => {
-    try {
-      const count = await getUnreadCount(userId, token);
-      setUnreadCount(count);
-    } catch (err) {
-      console.error('Error al cargar contador de notificaciones:', err);
-    }
-  };
 
   const handleMarkAsRead = async (notificationId) => {
     try {

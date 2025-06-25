@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { createTask, updateTask, getAssignableUsers } from '../services/taskService';
 import ErrorHandler from '../utils/errorHandler';
 
@@ -12,6 +12,15 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const loadAssignableUsers = useCallback(async () => {
+    try {
+      const users = await getAssignableUsers(projectId, token);
+      setAssignableUsers(users);
+    } catch (err) {
+      console.error('Error al cargar usuarios asignables:', err);
+    }
+  }, [projectId, token]);
+
   useEffect(() => {
     if (task) {
       setTitle(task.title || '');
@@ -24,16 +33,7 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
     if (projectId) {
       loadAssignableUsers();
     }
-  }, [task, projectId]);
-
-  const loadAssignableUsers = async () => {
-    try {
-      const users = await getAssignableUsers(projectId, token);
-      setAssignableUsers(users);
-    } catch (err) {
-      console.error('Error al cargar usuarios asignables:', err);
-    }
-  };
+  }, [task, projectId, loadAssignableUsers]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
