@@ -8,10 +8,6 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
   const [error, setError] = useState('');
   const [deletingId, setDeletingId] = useState(null);
 
-  useEffect(() => {
-    loadProjects();
-  }, [loadProjects]);
-
   const loadProjects = useCallback(async () => {
     try {
       setLoading(true);
@@ -23,6 +19,10 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
       setLoading(false);
     }
   }, [ownerId, token]);
+
+  useEffect(() => {
+    loadProjects();
+  }, [loadProjects]);
 
   const handleDeleteProject = async (projectId, projectName) => {
     if (!window.confirm(`¿Estás seguro de que quieres eliminar el proyecto "${projectName}"?`)) {
