@@ -1,6 +1,6 @@
 import React from 'react';
 import NotificationCenter from './NotificationCenter';
-import './Navbar.css';
+import '../styles/Navbar.css';
 
 export default function Navbar({ onLogout, user, token }) {
   return (
