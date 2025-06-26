@@ -1,0 +1,49 @@
+/* Paleta de colores ColaborAI */
+:root {
+  /* Colores principales */
+  --caribbean-current: #006d77;
+  --tiffany-blue: #83c5be;
+  --alice-blue: #edf6f9;
+  --pale-dogwood: #ffddd2;
+  --atomic-tangerine: #e29578;
+  
+  /* Variaciones de colores principales para hover y estados */
+  --caribbean-current-dark: #005761;
+  --caribbean-current-light: #007a85;
+  --tiffany-blue-dark: #6ba89e;
+  --tiffany-blue-light: #a0d3ce;
+  --atomic-tangerine-dark: #d17e5f;
+  --atomic-tangerine-light: #e8a890;
+  
+  /* Asignación semántica de colores */
+  --primary-color: var(--caribbean-current);
+  --primary-hover: var(--caribbean-current-dark);
+  --primary-light: var(--tiffany-blue);
+  --secondary-color: var(--atomic-tangerine);
+  --secondary-hover: var(--atomic-tangerine-dark);
+  --accent-color: var(--pale-dogwood);
+  --background-color: var(--alice-blue);
+  --background-light: #ffffff;
+  
+  /* Estados de la aplicación */
+  --success-color: var(--tiffany-blue);
+  --success-light: var(--tiffany-blue-light);
+  --warning-color: var(--atomic-tangerine);
+  --warning-light: var(--pale-dogwood);
+  --danger-color: #c62828;
+  --danger-light: #ffebee;
+  --info-color: var(--caribbean-current);
+  --info-light: var(--alice-blue);
+  
+  /* Colores de texto */
+  --text-primary: var(--caribbean-current);
+  --text-secondary: #4a4a4a;
+  --text-muted: #6c757d;
+  --text-light: #ffffff;
+  
+  /* Bordes y sombras */
+  --border-color: #dee2e6;
+  --border-light: var(--tiffany-blue-light);
+  --shadow-color: rgba(0, 109, 119, 0.1);
+  --shadow-hover: rgba(0, 109, 119, 0.2);
+}

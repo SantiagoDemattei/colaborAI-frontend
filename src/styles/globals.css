@@ -1,3 +1,6 @@
+/* Importar paleta de colores */
+@import './colors.css';
+
 /* Estilos globales para ColaborAI */
 
 * {
@@ -10,9 +13,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f5f5;
+  background-color: var(--background-color);
   margin: 0;
   padding: 0;
+  color: var(--text-secondary);
 }
 
 /* Estilos para formularios */
@@ -20,9 +24,10 @@ body {
   max-width: 400px;
   margin: 50px auto;
   padding: 30px;
-  background: white;
+  background: var(--background-light);
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px var(--shadow-color);
+  border: 1px solid var(--border-light);
 }
 
 .form-group {
@@ -33,26 +38,27 @@ body {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .form-input {
   width: 100%;
   padding: 12px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--border-color);
   border-radius: 6px;
   font-size: 16px;
   transition: border-color 0.3s ease;
+  background-color: var(--background-light);
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #1976d2;
-  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 109, 119, 0.1);
 }
 
 .form-input.error {
-  border-color: #f44336;
+  border-color: var(--danger-color);
 }
 
 .form-textarea {
@@ -63,10 +69,10 @@ body {
 .form-select {
   width: 100%;
   padding: 12px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--border-color);
   border-radius: 6px;
   font-size: 16px;
-  background-color: white;
+  background-color: var(--background-light);
   cursor: pointer;
 }
 
@@ -90,51 +96,52 @@ body {
 }
 
 .btn-primary {
-  background-color: #1976d2;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-light);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #1565c0;
+  background-color: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+  box-shadow: 0 4px 8px var(--shadow-hover);
 }
 
 .btn-secondary {
-  background-color: #f5f5f5;
-  color: #333;
-  border: 2px solid #ddd;
+  background-color: var(--accent-color);
+  color: var(--text-primary);
+  border: 2px solid var(--border-light);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: #e0e0e0;
+  background-color: var(--tiffany-blue-light);
+  border-color: var(--primary-light);
 }
 
 .btn-success {
-  background-color: #4caf50;
-  color: white;
+  background-color: var(--success-color);
+  color: var(--text-light);
 }
 
 .btn-success:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: var(--tiffany-blue-dark);
 }
 
 .btn-danger {
-  background-color: #f44336;
-  color: white;
+  background-color: var(--danger-color);
+  color: var(--text-light);
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: #da190b;
+  background-color: #b71c1c;
 }
 
 .btn-warning {
-  background-color: #ff9800;
-  color: white;
+  background-color: var(--warning-color);
+  color: var(--text-light);
 }
 
 .btn-warning:hover:not(:disabled) {
-  background-color: #f57c00;
+  background-color: var(--secondary-hover);
 }
 
 .btn-small {
@@ -149,35 +156,36 @@ body {
 
 /* Cards */
 .card {
-  background: white;
+  background: var(--background-light);
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--shadow-color);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid var(--border-light);
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px var(--shadow-hover);
 }
 
 .card-header {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-light);
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
 
 .card-title {
   margin: 0;
-  color: #1976d2;
+  color: var(--primary-color);
   font-size: 20px;
   font-weight: 600;
 }
 
 .card-subtitle {
   margin: 5px 0 0 0;
-  color: #666;
+  color: var(--text-muted);
   font-size: 14px;
 }
 
@@ -192,28 +200,28 @@ body {
 }
 
 .badge-primary {
-  background-color: #1976d2;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-light);
 }
 
 .badge-success {
-  background-color: #4caf50;
-  color: white;
+  background-color: var(--success-color);
+  color: var(--text-light);
 }
 
 .badge-warning {
-  background-color: #ff9800;
-  color: white;
+  background-color: var(--warning-color);
+  color: var(--text-light);
 }
 
 .badge-danger {
-  background-color: #f44336;
-  color: white;
+  background-color: var(--danger-color);
+  color: var(--text-light);
 }
 
 .badge-secondary {
-  background-color: #666;
-  color: white;
+  background-color: var(--text-muted);
+  color: var(--text-light);
 }
 
 /* Alertas */
@@ -225,33 +233,33 @@ body {
 }
 
 .alert-success {
-  background-color: #e8f5e8;
-  border-color: #4caf50;
-  color: #2e7d32;
+  background-color: var(--success-light);
+  border-color: var(--success-color);
+  color: var(--caribbean-current-dark);
 }
 
 .alert-error {
-  background-color: #ffebee;
-  border-color: #f44336;
-  color: #c62828;
+  background-color: var(--danger-light);
+  border-color: var(--danger-color);
+  color: var(--danger-color);
 }
 
 .alert-warning {
-  background-color: #fff8e1;
-  border-color: #ff9800;
-  color: #f57c00;
+  background-color: var(--warning-light);
+  border-color: var(--warning-color);
+  color: var(--secondary-hover);
 }
 
 .alert-info {
-  background-color: #e3f2fd;
-  border-color: #2196f3;
-  color: #1565c0;
+  background-color: var(--info-light);
+  border-color: var(--info-color);
+  color: var(--primary-color);
 }
 
 /* Loading spinner */
 .loading-spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #1976d2;
+  border: 4px solid var(--alice-blue);
+  border-top: 4px solid var(--primary-color);
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -355,11 +363,11 @@ body {
   right: 20px;
   padding: 15px 20px;
   border-radius: 8px;
-  color: white;
+  color: var(--text-light);
   font-weight: 600;
   z-index: 9999;
   max-width: 400px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px var(--shadow-hover);
   animation: slideIn 0.3s ease;
 }
 
@@ -375,19 +383,19 @@ body {
 }
 
 .notification-success {
-  background-color: #4caf50;
+  background-color: var(--success-color);
 }
 
 .notification-error {
-  background-color: #f44336;
+  background-color: var(--danger-color);
 }
 
 .notification-warning {
-  background-color: #ff9800;
+  background-color: var(--warning-color);
 }
 
 .notification-info {
-  background-color: #2196f3;
+  background-color: var(--info-color);
 }
 
 /* Modal overlay */
@@ -397,7 +405,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 109, 119, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -405,19 +413,20 @@ body {
 }
 
 .modal-content {
-  background: white;
+  background: var(--background-light);
   border-radius: 8px;
   padding: 25px;
   min-width: 400px;
   max-width: 90vw;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px var(--shadow-hover);
+  border: 1px solid var(--border-light);
 }
 
 /* Tabs */
 .tabs {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 20px;
 }
 
@@ -430,30 +439,32 @@ body {
   margin-right: 5px;
   font-weight: 600;
   transition: all 0.3s ease;
+  color: var(--text-secondary);
 }
 
 .tab-button.active {
-  background-color: #1976d2;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-light);
 }
 
 .tab-button:not(.active):hover {
-  background-color: #f5f5f5;
+  background-color: var(--accent-color);
+  color: var(--text-primary);
 }
 
 /* Status indicators */
 .status-pending {
-  color: #ff9800;
+  color: var(--warning-color);
 }
 
 .status-in-progress {
-  color: #2196f3;
+  color: var(--info-color);
 }
 
 .status-completed {
-  color: #4caf50;
+  color: var(--success-color);
 }
 
 .status-cancelled {
-  color: #f44336;
+  color: var(--danger-color);
 }

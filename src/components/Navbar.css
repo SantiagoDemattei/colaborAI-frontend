@@ -1,0 +1,54 @@
+/* Estilos para la barra de navegación */
+.navbar {
+  padding: 1rem;
+  background: var(--primary-color);
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navbar-title {
+  margin-left: 20px;
+  color: var(--tiffany-blue-light);
+}
+
+.navbar-user-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-user-info {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-greeting {
+  margin-right: 15px;
+  color: var(--text-light);
+}
+
+.navbar-logout-btn {
+  background: var(--background-light);
+  color: var(--primary-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.navbar-logout-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}

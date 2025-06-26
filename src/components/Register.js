@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Register() {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -16,25 +17,64 @@ export default function Register() {
     const res = await register(form);
     if (res.token) {
       setMessage('Registro exitoso! Por favor hacé login.');
+      setMessageType('success');
       setTimeout(() => navigate('/login'), 2000);
     } else {
       setMessage(res.message || 'Error en registro');
+      setMessageType('error');
     }
   };
 
   return (
-    <div>
-      <h2>Registro</h2>
+    <div className="form-container">
+      <h2 style={{ textAlign: 'center', color: 'var(--primary-color)', marginBottom: '30px' }}>
+        Registro
+      </h2>
       <form onSubmit={handleSubmit}>
-        <input name="username" placeholder="Usuario" value={form.username} onChange={handleChange} required />
-        <br />
-        <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
-        <br />
-        <input type="password" name="password" placeholder="Contraseña" value={form.password} onChange={handleChange} required />
-        <br />
-        <button type="submit">Registrarse</button>
+        <div className="form-group">
+          <label className="form-label">Usuario</label>
+          <input 
+            className="form-input"
+            name="username" 
+            placeholder="Ingresa tu usuario" 
+            value={form.username} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label className="form-label">Email</label>
+          <input 
+            className="form-input"
+            type="email" 
+            name="email" 
+            placeholder="Ingresa tu email" 
+            value={form.email} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label className="form-label">Contraseña</label>
+          <input 
+            className="form-input"
+            type="password" 
+            name="password" 
+            placeholder="Ingresa tu contraseña" 
+            value={form.password} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <button className="btn btn-primary" type="submit" style={{ width: '100%' }}>
+          Registrarse
+        </button>
       </form>
-      <p>{message}</p>
+      {message && (
+        <div className={`alert alert-${messageType}`} style={{ marginTop: '20px' }}>
+          {message}
+        </div>
+      )}
     </div>
   );
 }

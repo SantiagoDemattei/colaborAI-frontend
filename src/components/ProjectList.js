@@ -42,12 +42,12 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
   };
 
   const projectCardStyle = {
-    border: '1px solid #ddd',
+    border: '1px solid var(--border-light)',
     borderRadius: '8px',
     padding: '20px',
     marginBottom: '15px',
-    backgroundColor: 'white',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    backgroundColor: 'var(--background-light)',
+    boxShadow: '0 2px 4px var(--shadow-color)',
     transition: 'transform 0.2s ease, box-shadow 0.2s ease',
     cursor: 'pointer'
   };
@@ -55,13 +55,13 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
   const projectCardHoverStyle = {
     ...projectCardStyle,
     transform: 'translateY(-2px)',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.15)'
+    boxShadow: '0 4px 8px var(--shadow-hover)'
   };
 
   if (loading) {
     return (
       <div style={{ textAlign: 'center', padding: '40px' }}>
-        <div style={{ fontSize: '18px', color: '#666' }}>
+        <div style={{ fontSize: '18px', color: 'var(--text-muted)' }}>
           🔄 Cargando proyectos...
         </div>
       </div>
@@ -71,24 +71,28 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
   if (error) {
     return (
       <div style={{ 
-        color: '#f44336', 
+        color: 'var(--danger-color)', 
         padding: '20px', 
-        backgroundColor: '#ffebee',
+        backgroundColor: 'var(--danger-light)',
         borderRadius: '8px',
-        textAlign: 'center'
+        textAlign: 'center',
+        border: '1px solid var(--danger-color)'
       }}>
         ❌ {error}
         <button 
           onClick={loadProjects}
           style={{
             marginLeft: '10px',
-            backgroundColor: '#1976d2',
-            color: 'white',
+            backgroundColor: 'var(--primary-color)',
+            color: 'var(--text-light)',
             border: 'none',
             padding: '8px 15px',
             borderRadius: '4px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: 'background-color 0.3s ease'
           }}
+          onMouseOver={(e) => e.target.style.backgroundColor = 'var(--primary-hover)'}
+          onMouseOut={(e) => e.target.style.backgroundColor = 'var(--primary-color)'}
         >
           Reintentar
         </button>
