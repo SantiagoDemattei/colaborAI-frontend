@@ -300,6 +300,7 @@ export default function Dashboard({ token, ownerId, user }) {
               token={token}
               ownerId={ownerId}
               isOwner={isProjectOwner}
+              currentUser={user}
             />
           </div>
         </div>

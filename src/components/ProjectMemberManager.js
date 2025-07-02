@@ -8,7 +8,7 @@ import {
 } from '../services/memberService';
 import ErrorHandler from '../utils/errorHandler';
 
-export default function ProjectMemberManager({ projectId, token, ownerId, isOwner }) {
+export default function ProjectMemberManager({ projectId, token, ownerId, isOwner, currentUser }) {
   const [members, setMembers] = useState([]);
   const [availableUsers, setAvailableUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -103,6 +103,7 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
 
   const getRoleDisplayName = (role) => {
     const roles = {
+      'OWNER': 'Propietario',
       'ADMIN': 'Administrador',
       'MEMBER': 'Miembro',
       'VIEWER': 'Visualizador'
@@ -112,6 +113,7 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
 
   const getRoleColor = (role) => {
     const colors = {
+      'OWNER': '#9c27b0',
       'ADMIN': '#f44336',
       'MEMBER': '#2196f3',
       'VIEWER': '#4caf50'
@@ -206,7 +208,8 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
         {members.length === 0 ? (
           <p style={{ color: '#666', fontStyle: 'italic' }}>No hay miembros en este proyecto</p>
         ) : (
-          members.map(member => (
+          members.map(member => {
+            return (
             <div key={member.id} style={{ 
               padding: '15px',
               border: '1px solid #ddd',
@@ -219,10 +222,21 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
             }}>
               <div>
                 <div style={{ fontWeight: 'bold', fontSize: '16px' }}>
-                  {member.username}
+                  {member.username || member.user?.username || member.name || 'Sin nombre'}
+                  {currentUser && currentUser.id === (member.userId || member.user?.id) && (
+                    <span style={{ 
+                      color: '#1976d2', 
+                      fontSize: '12px', 
+                      marginLeft: '8px',
+                      fontWeight: 'normal',
+                      fontStyle: 'italic' 
+                    }}>
+                      (Yo)
+                    </span>
+                  )}
                 </div>
                 <div style={{ color: '#666', fontSize: '14px' }}>
-                  {member.email}
+                  {member.email || member.user?.email || 'Sin email'}
                 </div>
                 <div style={{ 
                   display: 'inline-block',
@@ -324,7 +338,7 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
                 </div>
               )}
             </div>
-          ))
+          )})
         )}
       </div>
     </div>
