@@ -209,7 +209,7 @@ export default function NotificationCenter({ token, userId, onUnreadCountChange 
           {/* Contenido */}
           <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
             {loading ? (
-              <div style={{ padding: '20px', textAlign: 'center' }}>
+              <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
                 Cargando notificaciones...
               </div>
             ) : error ? (
@@ -240,7 +240,8 @@ export default function NotificationCenter({ token, userId, onUnreadCountChange 
                     <div style={{ flex: 1 }}>
                       <div style={{ 
                         fontWeight: notification.read ? 'normal' : 'bold',
-                        marginBottom: '5px'
+                        marginBottom: '5px',
+                        color: notification.read ? '#666' : '#222'
                       }}>
                         {notification.message}
                       </div>
