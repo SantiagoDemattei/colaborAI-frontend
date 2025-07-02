@@ -10,6 +10,14 @@ export async function getProjectsByOwner(ownerId, token) {
   return res.json();
 }
 
+export async function getAllUserProjects(userId, token) {
+  const res = await fetch(`${PROJECTS_URL}/user/${userId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener proyectos del usuario');
+  return res.json();
+}
+
 export async function getProjectById(id, token) {
   const res = await fetch(`${PROJECTS_URL}/${id}`, {
     headers: { Authorization: `Bearer ${token}` }

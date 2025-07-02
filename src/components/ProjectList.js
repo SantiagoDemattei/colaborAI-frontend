@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { getProjectsByOwner, deleteProject } from '../services/projectService';
+import { getAllUserProjects, deleteProject } from '../services/projectService';
 import ErrorHandler from '../utils/errorHandler';
 
 export default function ProjectList({ ownerId, token, onSelectProject }) {
@@ -11,7 +11,7 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
   const loadProjects = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getProjectsByOwner(ownerId, token);
+      const data = await getAllUserProjects(ownerId, token);
       setProjects(data);
     } catch (err) {
       setError(ErrorHandler.handleApiError(err));
@@ -149,9 +149,35 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
                   margin: '0 0 8px 0', 
                   color: '#1976d2',
                   fontSize: '18px',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
                 }}>
                   📋 {project.name}
+                  {project.ownerId === ownerId ? (
+                    <span style={{
+                      backgroundColor: '#4caf50',
+                      color: 'white',
+                      fontSize: '10px',
+                      padding: '2px 6px',
+                      borderRadius: '10px',
+                      fontWeight: 'bold'
+                    }}>
+                      PROPIETARIO
+                    </span>
+                  ) : (
+                    <span style={{
+                      backgroundColor: '#2196f3',
+                      color: 'white',
+                      fontSize: '10px',
+                      padding: '2px 6px',
+                      borderRadius: '10px',
+                      fontWeight: 'bold'
+                    }}>
+                      MIEMBRO
+                    </span>
+                  )}
                 </h4>
                 
                 <p style={{ 
@@ -175,7 +201,7 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
                 </div>
               </div>
               
-              <div style={{ display: 'flex', gap: '8px', marginLeft: '15px' }}>
+              <div style={{ display: 'flex', gap: '8px', marginLeft: '15px' }}>                
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -196,26 +222,28 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
                   👁️ Ver
                 </button>
                 
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteProject(project.id, project.name);
-                  }}
-                  disabled={deletingId === project.id}
-                  style={{
-                    backgroundColor: deletingId === project.id ? '#ccc' : '#f44336',
-                    color: 'white',
-                    border: 'none',
-                    padding: '8px 12px',
-                    borderRadius: '4px',
-                    cursor: deletingId === project.id ? 'not-allowed' : 'pointer',
-                    fontSize: '12px',
-                    fontWeight: 'bold'
-                  }}
-                  title="Eliminar proyecto"
-                >
-                  {deletingId === project.id ? '⏳' : '🗑️'}
-                </button>
+                {project.ownerId === ownerId && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteProject(project.id, project.name);
+                    }}
+                    disabled={deletingId === project.id}
+                    style={{
+                      backgroundColor: deletingId === project.id ? '#ccc' : '#f44336',
+                      color: 'white',
+                      border: 'none',
+                      padding: '8px 12px',
+                      borderRadius: '4px',
+                      cursor: deletingId === project.id ? 'not-allowed' : 'pointer',
+                      fontSize: '12px',
+                      fontWeight: 'bold'
+                    }}
+                    title="Eliminar proyecto"
+                  >
+                    {deletingId === project.id ? '⏳' : '🗑️'}
+                  </button>
+                )}
               </div>
             </div>
           </div>
