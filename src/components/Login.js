@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { login, saveAuth } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login({ onLoginSuccess }) {
   const [form, setForm] = useState({ username: '', password: '' });
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
@@ -20,6 +20,10 @@ export default function Login() {
       const res = await login(form);
       if (res.token && res.id && res.username) {
         saveAuth(res.token, { id: res.id, username: res.username });
+        // Notificar al componente padre que el login fue exitoso
+        if (onLoginSuccess) {
+          onLoginSuccess();
+        }
         setMessage('Login exitoso!');
         setMessageType('success');
         setTimeout(() => navigate('/dashboard'), 1000);

@@ -52,4 +52,16 @@ export function getToken() {
 
 export function logout() {
   localStorage.removeItem('token');
+  localStorage.removeItem('user');
+}
+
+export function getUser() {
+  const user = localStorage.getItem('user');
+  return user ? JSON.parse(user) : null;
+}
+
+export function isAuthenticated() {
+  const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
+  return !!(token && user);
 }
