@@ -14,8 +14,8 @@ export default function InvitationManager({ token, userId }) {
     try {
       setLoading(true);
       const [pending, sent] = await Promise.all([
-        getPendingRequests(userId, token),
-        getSentRequests(userId, token)
+        getPendingRequests(token), // Eliminado userId
+        getSentRequests(token)     // Eliminado userId
       ]);
       setPendingRequests(pending);
       setSentRequests(sent);
@@ -24,7 +24,7 @@ export default function InvitationManager({ token, userId }) {
     } finally {
       setLoading(false);
     }
-  }, [userId, token]);
+  }, [token]); // Eliminado userId de las dependencias
 
   useEffect(() => {
     loadInvitations();

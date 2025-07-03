@@ -2,16 +2,18 @@ import { API_URL } from './apiConfig';
 
 const PROJECTS_URL = `${API_URL}/api/projects`;
 
-export async function getProjectsByOwner(ownerId, token) {
-  const res = await fetch(`${PROJECTS_URL}/owner/${ownerId}`, {
+export async function getProjectsByOwner(token) {
+  // No necesitamos enviar ownerId ya que se obtiene del token JWT
+  const res = await fetch(`${PROJECTS_URL}/owner`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) throw new Error('Error al obtener proyectos');
   return res.json();
 }
 
-export async function getAllUserProjects(userId, token) {
-  const res = await fetch(`${PROJECTS_URL}/user/${userId}`, {
+export async function getAllUserProjects(token) {
+  // No necesitamos enviar userId ya que se obtiene del token JWT
+  const res = await fetch(`${PROJECTS_URL}/user`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) throw new Error('Error al obtener proyectos del usuario');

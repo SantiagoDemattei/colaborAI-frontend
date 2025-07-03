@@ -11,14 +11,14 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
   const loadProjects = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getAllUserProjects(ownerId, token);
+      const data = await getAllUserProjects(token); // Eliminado ownerId
       setProjects(data);
     } catch (err) {
       setError(ErrorHandler.handleApiError(err));
     } finally {
       setLoading(false);
     }
-  }, [ownerId, token]);
+  }, [token]); // Eliminado ownerId de las dependencias
 
   useEffect(() => {
     loadProjects();

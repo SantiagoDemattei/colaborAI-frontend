@@ -19,19 +19,14 @@ export async function getTaskById(id, token) {
 }
 
 export async function createTask(task, projectId, token) {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const taskData = {
-    ...task,
-    createdById: user.id
-  };
-  
+  // No necesitamos enviar createdById ya que se obtiene del token JWT
   const res = await fetch(`${TASKS_URL}/project/${projectId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(taskData)
+    body: JSON.stringify(task)
   });
   if (!res.ok) {
     const error = await res.json();
@@ -41,19 +36,14 @@ export async function createTask(task, projectId, token) {
 }
 
 export async function updateTask(id, task, token) {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const taskData = {
-    ...task,
-    userId: user.id
-  };
-  
+  // No necesitamos enviar userId ya que se obtiene del token JWT
   const res = await fetch(`${TASKS_URL}/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(taskData)
+    body: JSON.stringify(task)
   });
   if (!res.ok) {
     const error = await res.json();
@@ -63,8 +53,8 @@ export async function updateTask(id, task, token) {
 }
 
 export async function deleteTask(id, token) {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const res = await fetch(`${TASKS_URL}/${id}?userId=${user.id}`, {
+  // No necesitamos enviar userId ya que se obtiene del token JWT
+  const res = await fetch(`${TASKS_URL}/${id}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` }
   });
@@ -73,14 +63,14 @@ export async function deleteTask(id, token) {
 }
 
 export async function assignTask(taskId, assigneeId, token) {
-  const user = JSON.parse(localStorage.getItem('user'));
+  // No necesitamos enviar userId ya que se obtiene del token JWT
   const res = await fetch(`${TASKS_URL}/${taskId}/assign`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify({ assigneeId, userId: user.id })
+    body: JSON.stringify({ assigneeId })
   });
   if (!res.ok) {
     const error = await res.json();

@@ -9,7 +9,7 @@ export async function sendConnectionRequest(requesterId, usernameOrEmail, token)
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify({ requesterId, usernameOrEmail })
+    body: JSON.stringify({ usernameOrEmail }) // Solo enviar usernameOrEmail, el requesterId se obtiene del token
   });
   if (!res.ok) {
     const error = await res.json();
@@ -36,24 +36,27 @@ export async function rejectConnectionRequest(connectionId, userId, token) {
   return res.json();
 }
 
-export async function getPendingRequests(userId, token) {
-  const res = await fetch(`${CONNECTIONS_URL}/pending/${userId}`, {
+export async function getPendingRequests(token) {
+  // No necesitamos enviar userId ya que se obtiene del token JWT
+  const res = await fetch(`${CONNECTIONS_URL}/pending`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) throw new Error('Error al obtener invitaciones pendientes');
   return res.json();
 }
 
-export async function getSentRequests(userId, token) {
-  const res = await fetch(`${CONNECTIONS_URL}/sent/${userId}`, {
+export async function getSentRequests(token) {
+  // No necesitamos enviar userId ya que se obtiene del token JWT
+  const res = await fetch(`${CONNECTIONS_URL}/sent`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) throw new Error('Error al obtener invitaciones enviadas');
   return res.json();
 }
 
-export async function getConnectedUsers(userId, token) {
-  const res = await fetch(`${CONNECTIONS_URL}/users/${userId}`, {
+export async function getConnectedUsers(token) {
+  // No necesitamos enviar userId ya que se obtiene del token JWT
+  const res = await fetch(`${CONNECTIONS_URL}/users`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) throw new Error('Error al obtener contactos');
