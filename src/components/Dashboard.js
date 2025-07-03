@@ -6,6 +6,7 @@ import TaskForm from './TaskForm';
 import ProjectMemberManager from './ProjectMemberManager';
 import InvitationForm from './InvitationForm';
 import InvitationManager from './InvitationManager';
+import ConnectionList from './ConnectionList';
 import { canUserModifyProject } from '../services/memberService';
 import ErrorHandler from '../utils/errorHandler';
 
@@ -118,6 +119,12 @@ export default function Dashboard({ token, ownerId, user }) {
         >
           👥 Invitaciones
         </button>
+        <button 
+          style={tabStyle(activeTab === 'connections')}
+          onClick={() => setActiveTab('connections')}
+        >
+          🔗 Mis Conexiones
+        </button>
         {selectedProjectId && (
           <button 
             style={tabStyle(activeTab === 'project-details')}
@@ -200,6 +207,15 @@ export default function Dashboard({ token, ownerId, user }) {
               userId={ownerId}
             />
           </div>
+        </div>
+      )}
+
+      {activeTab === 'connections' && (
+        <div style={sectionStyle}>
+          <ConnectionList
+            token={token}
+            userId={ownerId}
+          />
         </div>
       )}
 

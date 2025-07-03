@@ -63,6 +63,15 @@ export async function getConnectedUsers(token) {
   return res.json();
 }
 
+export async function getAcceptedConnections(token) {
+  // Obtener las conexiones aceptadas con información completa incluyendo fecha de aceptación
+  const res = await fetch(`${CONNECTIONS_URL}/accepted`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener conexiones aceptadas');
+  return res.json();
+}
+
 export async function areUsersConnected(user1Id, user2Id, token) {
   const res = await fetch(`${CONNECTIONS_URL}/check?user1Id=${user1Id}&user2Id=${user2Id}`, {
     headers: { Authorization: `Bearer ${token}` }
