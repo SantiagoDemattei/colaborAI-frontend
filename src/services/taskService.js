@@ -86,3 +86,11 @@ export async function getAssignableUsers(projectId, token) {
   if (!res.ok) throw new Error('Error al obtener usuarios asignables');
   return res.json();
 }
+
+export async function getMyAssignedTasks(token) {
+  const res = await fetch(`${TASKS_URL}/my-tasks`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener mis tareas asignadas');
+  return res.json();
+}

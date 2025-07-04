@@ -3,6 +3,7 @@ import ProjectList from './ProjectList';
 import ProjectForm from './ProjectForm';
 import TaskList from './TaskList';
 import TaskForm from './TaskForm';
+import MyTasks from './MyTasks';
 import ProjectMemberManager from './ProjectMemberManager';
 import InvitationForm from './InvitationForm';
 import InvitationManager from './InvitationManager';
@@ -114,6 +115,12 @@ export default function Dashboard({ token, ownerId, user }) {
           📋 Mis Proyectos
         </button>
         <button 
+          style={tabStyle(activeTab === 'my-tasks')}
+          onClick={() => setActiveTab('my-tasks')}
+        >
+          ✅ Mis Tareas
+        </button>
+        <button 
           style={tabStyle(activeTab === 'invitations')}
           onClick={() => setActiveTab('invitations')}
         >
@@ -185,6 +192,15 @@ export default function Dashboard({ token, ownerId, user }) {
             token={token}
             onSelectProject={handleProjectSelect}
             key={refreshProjects}
+          />
+        </div>
+      )}
+
+      {activeTab === 'my-tasks' && (
+        <div style={sectionStyle}>
+          <MyTasks
+            token={token}
+            userId={ownerId}
           />
         </div>
       )}
