@@ -155,7 +155,7 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
                   gap: '8px'
                 }}>
                   📋 {project.name}
-                  {project.ownerId === ownerId ? (
+                  {project.currentUserRole === 'OWNER' ? (
                     <span style={{
                       backgroundColor: '#4caf50',
                       color: 'white',
@@ -166,7 +166,18 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
                     }}>
                       PROPIETARIO
                     </span>
-                  ) : (
+                  ) : project.currentUserRole === 'ADMIN' ? (
+                    <span style={{
+                      backgroundColor: '#f44336',
+                      color: 'white',
+                      fontSize: '10px',
+                      padding: '2px 6px',
+                      borderRadius: '10px',
+                      fontWeight: 'bold'
+                    }}>
+                      ADMINISTRADOR
+                    </span>
+                  ) : project.currentUserRole === 'MEMBER' ? (
                     <span style={{
                       backgroundColor: '#2196f3',
                       color: 'white',
@@ -177,7 +188,7 @@ export default function ProjectList({ ownerId, token, onSelectProject }) {
                     }}>
                       MIEMBRO
                     </span>
-                  )}
+                  ) : null}
                 </h4>
                 
                 <p style={{ 
