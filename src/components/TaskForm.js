@@ -9,6 +9,7 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
   const [status, setStatus] = useState('PENDING');
   const [priority, setPriority] = useState('');
   const [assigneeId, setAssigneeId] = useState('');
+  const [estimatedDuration, setEstimatedDuration] = useState('');
   const [assignableUsers, setAssignableUsers] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,6 +31,7 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
       setStatus(task.status || 'PENDING');
       setPriority(task.priority || '');
       setAssigneeId(task.assigneeId || '');
+      setEstimatedDuration(task.estimatedDuration || '');
     }
     
     if (projectId) {
@@ -72,7 +74,8 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
         dueDate: dueDate || null,
         status,
         priority: priority || null,
-        assigneeId: assigneeId || null
+        assigneeId: assigneeId || null,
+        estimatedDuration: estimatedDuration ? parseInt(estimatedDuration) : null
       };
       
       let result;
@@ -92,6 +95,7 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
         setStatus('PENDING');
         setPriority('');
         setAssigneeId('');
+        setEstimatedDuration('');
       }
       
       ErrorHandler.showNotification(
@@ -201,6 +205,20 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
               <option value="HIGH">Alta</option>
             </select>
           </div>
+        </div>
+
+        <div style={{ marginBottom: '15px' }}>
+          <label style={labelStyle}>Duración estimada (días):</label>
+          <input
+            type="number"
+            value={estimatedDuration}
+            onChange={e => setEstimatedDuration(e.target.value)}
+            style={inputStyle}
+            disabled={loading}
+            placeholder="Ej: 5"
+            min="1"
+            max="365"
+          />
         </div>
 
         <div style={{ marginBottom: '15px' }}>

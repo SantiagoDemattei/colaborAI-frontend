@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { getTasksByProject, deleteTask, assignTask, getAssignableUsers } from '../services/taskService';
 import KanbanBoard from './KanbanBoard';
 import TaskDependencyManager from './TaskDependencyManager';
+import CPMPertChart from './CPMPertChart';
 import ErrorHandler from '../utils/errorHandler';
 
 export default function TaskList({ projectId, token, onSelectTask, canModify }) {
@@ -16,7 +17,7 @@ export default function TaskList({ projectId, token, onSelectTask, canModify }) 
   const [showDependencyManager, setShowDependencyManager] = useState(null);
   
   // Estados para búsqueda, filtros y vista
-  const [viewMode, setViewMode] = useState('list'); // 'list' o 'kanban'
+  const [viewMode, setViewMode] = useState('list'); // 'list', 'kanban' o 'cmp-pert'
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('dueDate');
   const [sortOrder, setSortOrder] = useState('asc');
@@ -324,6 +325,21 @@ export default function TaskList({ projectId, token, onSelectTask, canModify }) 
           >
             📊 Kanban
           </button>
+          <button
+            onClick={() => setViewMode('cmp-pert')}
+            style={{
+              padding: '8px 12px',
+              border: '1px solid var(--border-light)',
+              borderRadius: '4px',
+              backgroundColor: viewMode === 'cmp-pert' ? 'var(--primary-color)' : 'var(--accent-color)',
+              color: viewMode === 'cmp-pert' ? 'white' : 'var(--text-primary)',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontWeight: 'bold'
+            }}
+          >
+            🔗 CPM-PERT
+          </button>
         </div>
       </div>
 
@@ -474,7 +490,7 @@ export default function TaskList({ projectId, token, onSelectTask, canModify }) 
         </div>
       )}
 
-      {/* Vista Kanban */}
+      {/* Renderizar según el modo de vista */}
       {viewMode === 'kanban' ? (
         <KanbanBoard
           tasks={filteredAndSortedTasks}
@@ -482,6 +498,14 @@ export default function TaskList({ projectId, token, onSelectTask, canModify }) 
           onTaskUpdate={loadTasks}
           canModify={canModify}
           onSelectTask={onSelectTask}
+        />
+      ) : viewMode === 'cmp-pert' ? (
+        <CPMPertChart
+          projectId={projectId}
+          tasks={tasks}
+          token={token}
+          onTaskSelect={onSelectTask}
+          onRefresh={loadTasks}
         />
       ) : (
         /* Vista de Lista */

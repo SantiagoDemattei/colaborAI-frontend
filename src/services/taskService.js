@@ -137,3 +137,20 @@ export async function getTaskDependents(taskId, token) {
   if (!res.ok) throw new Error('Error al obtener tareas dependientes');
   return res.json();
 }
+
+// Funciones para análisis CPM-PERT
+export async function getCriticalPath(projectId, token) {
+  const res = await fetch(`${TASKS_URL}/project/${projectId}/critical-path`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener el camino crítico');
+  return res.json();
+}
+
+export async function getCriticalTasks(projectId, token) {
+  const res = await fetch(`${TASKS_URL}/project/${projectId}/critical-tasks`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener las tareas críticas');
+  return res.json();
+}
