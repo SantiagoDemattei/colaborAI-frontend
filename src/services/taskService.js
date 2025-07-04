@@ -102,3 +102,38 @@ export async function getTaskPriorities(token) {
   if (!res.ok) throw new Error('Error al obtener las prioridades de tareas');
   return res.json();
 }
+
+// Funciones para dependencias entre tareas
+export async function addTaskDependency(taskId, dependsOnTaskId, token) {
+  const res = await fetch(`${TASKS_URL}/${taskId}/dependencies/${dependsOnTaskId}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al agregar dependencia de tarea');
+  return res.json();
+}
+
+export async function removeTaskDependency(taskId, dependsOnTaskId, token) {
+  const res = await fetch(`${TASKS_URL}/${taskId}/dependencies/${dependsOnTaskId}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al remover dependencia de tarea');
+  return res.json();
+}
+
+export async function getTaskDependencies(taskId, token) {
+  const res = await fetch(`${TASKS_URL}/${taskId}/dependencies`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener dependencias de tarea');
+  return res.json();
+}
+
+export async function getTaskDependents(taskId, token) {
+  const res = await fetch(`${TASKS_URL}/${taskId}/dependents`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener tareas dependientes');
+  return res.json();
+}

@@ -272,6 +272,73 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
           )}
         </div>
       </form>
+
+      {/* Información de dependencias para tareas existentes */}
+      {task && task.id && (
+        <div style={{
+          marginTop: '20px',
+          padding: '15px',
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #dee2e6',
+          borderRadius: '6px'
+        }}>
+          <h4 style={{ margin: '0 0 10px 0', color: '#495057' }}>
+            🔗 Información de Dependencias
+          </h4>
+          
+          {/* Dependencias */}
+          {task.dependsOnTaskIds && task.dependsOnTaskIds.length > 0 ? (
+            <div style={{ marginBottom: '10px' }}>
+              <strong>Esta tarea depende de:</strong>
+              <div style={{ fontSize: '14px', color: '#6c757d', marginTop: '4px' }}>
+                {task.dependsOnTaskIds.length} tarea{task.dependsOnTaskIds.length > 1 ? 's' : ''}
+              </div>
+            </div>
+          ) : (
+            <div style={{ marginBottom: '10px', fontSize: '14px', color: '#6c757d' }}>
+              Esta tarea no depende de ninguna otra.
+            </div>
+          )}
+
+          {/* Tareas dependientes */}
+          {task.dependentTaskIds && task.dependentTaskIds.length > 0 ? (
+            <div style={{ marginBottom: '10px' }}>
+              <strong>Tareas que dependen de esta:</strong>
+              <div style={{ fontSize: '14px', color: '#6c757d', marginTop: '4px' }}>
+                {task.dependentTaskIds.length} tarea{task.dependentTaskIds.length > 1 ? 's' : ''}
+              </div>
+            </div>
+          ) : (
+            <div style={{ fontSize: '14px', color: '#6c757d' }}>
+              Ninguna tarea depende de esta.
+            </div>
+          )}
+
+          {/* Estado de completitud */}
+          {task.canBeCompleted === false && (
+            <div style={{
+              marginTop: '10px',
+              padding: '8px 12px',
+              backgroundColor: '#fff3cd',
+              border: '1px solid #ffeaa7',
+              borderRadius: '4px',
+              color: '#856404',
+              fontSize: '14px'
+            }}>
+              ⚠️ Esta tarea no puede ser completada hasta que se completen todas sus dependencias.
+            </div>
+          )}
+
+          <div style={{ 
+            marginTop: '10px', 
+            fontSize: '12px', 
+            color: '#6c757d',
+            fontStyle: 'italic'
+          }}>
+            Para gestionar las dependencias, ve a la vista de lista del proyecto y usa el botón "🔗 Dependencias".
+          </div>
+        </div>
+      )}
     </div>
   );
 }
