@@ -7,6 +7,7 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [status, setStatus] = useState('PENDING');
+  const [priority, setPriority] = useState('');
   const [assigneeId, setAssigneeId] = useState('');
   const [assignableUsers, setAssignableUsers] = useState([]);
   const [error, setError] = useState('');
@@ -27,6 +28,7 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
       setDescription(task.description || '');
       setDueDate(task.dueDate ? task.dueDate.substring(0, 10) : '');
       setStatus(task.status || 'PENDING');
+      setPriority(task.priority || '');
       setAssigneeId(task.assigneeId || '');
     }
     
@@ -69,6 +71,7 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
         description,
         dueDate: dueDate || null,
         status,
+        priority: priority || null,
         assigneeId: assigneeId || null
       };
       
@@ -87,6 +90,7 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
         setDescription('');
         setDueDate('');
         setStatus('PENDING');
+        setPriority('');
         setAssigneeId('');
       }
       
@@ -180,6 +184,21 @@ export default function TaskForm({ token, projectId, onSubmit, task }) {
               <option value="PENDING">Pendiente</option>
               <option value="IN_PROGRESS">En progreso</option>
               <option value="COMPLETED">Completada</option>
+            </select>
+          </div>
+
+          <div style={{ flex: 1 }}>
+            <label style={labelStyle}>Prioridad:</label>
+            <select 
+              value={priority} 
+              onChange={e => setPriority(e.target.value)}
+              style={inputStyle}
+              disabled={loading}
+            >
+              <option value="">Sin prioridad</option>
+              <option value="LOW">Baja</option>
+              <option value="MEDIUM">Media</option>
+              <option value="HIGH">Alta</option>
             </select>
           </div>
         </div>

@@ -100,6 +100,36 @@ export default function TaskList({ projectId, token, onSelectTask, canModify }) 
     return icons[status] || '📝';
   };
 
+  const getPriorityColor = (priority) => {
+    if (!priority) return '#9e9e9e';
+    const colors = {
+      'LOW': '#4caf50',
+      'MEDIUM': '#ff9800',
+      'HIGH': '#f44336'
+    };
+    return colors[priority] || '#666';
+  };
+
+  const getPriorityDisplayName = (priority) => {
+    if (!priority) return 'Sin prioridad';
+    const names = {
+      'LOW': 'Baja',
+      'MEDIUM': 'Media',
+      'HIGH': 'Alta'
+    };
+    return names[priority] || priority;
+  };
+
+  const getPriorityIcon = (priority) => {
+    if (!priority) return '⚪';
+    const icons = {
+      'LOW': '🟢',
+      'MEDIUM': '🟡',
+      'HIGH': '🔴'
+    };
+    return icons[priority] || '⚪';
+  };
+
   const taskCardStyle = {
     border: '1px solid #ddd',
     borderRadius: '8px',
@@ -232,10 +262,21 @@ export default function TaskList({ projectId, token, onSelectTask, canModify }) 
                   }}>
                     {getStatusDisplayName(task.status)}
                   </span>
+
+                  <span style={{ 
+                    backgroundColor: getPriorityColor(task.priority),
+                    color: 'white',
+                    padding: '4px 8px',
+                    borderRadius: '12px',
+                    fontSize: '12px',
+                    fontWeight: 'bold'
+                  }}>
+                    {getPriorityIcon(task.priority)} {getPriorityDisplayName(task.priority)}
+                  </span>
                   
-                  {task.assigneeName ? (
+                  {task.assignee ? (
                     <span style={{ color: '#4caf50' }}>
-                      👤 Asignada a: <strong>{task.assigneeName}</strong>
+                      👤 Asignada a: <strong>{task.assignee.username}</strong>
                     </span>
                   ) : (
                     <span style={{ color: '#ff9800' }}>

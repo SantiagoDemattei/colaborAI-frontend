@@ -69,6 +69,7 @@ export default function MyTasks({ token, userId }) {
   };
 
   const getPriorityColor = (priority) => {
+    if (!priority) return '#9e9e9e';
     const colors = {
       'LOW': '#4caf50',
       'MEDIUM': '#ff9800',
@@ -78,6 +79,7 @@ export default function MyTasks({ token, userId }) {
   };
 
   const getPriorityDisplayName = (priority) => {
+    if (!priority) return 'Sin prioridad';
     const names = {
       'LOW': 'Baja',
       'MEDIUM': 'Media',

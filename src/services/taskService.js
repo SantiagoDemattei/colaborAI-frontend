@@ -94,3 +94,11 @@ export async function getMyAssignedTasks(token) {
   if (!res.ok) throw new Error('Error al obtener mis tareas asignadas');
   return res.json();
 }
+
+export async function getTaskPriorities(token) {
+  const res = await fetch(`${TASKS_URL}/priorities`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Error al obtener las prioridades de tareas');
+  return res.json();
+}
