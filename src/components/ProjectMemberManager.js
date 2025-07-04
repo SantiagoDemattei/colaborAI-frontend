@@ -105,8 +105,7 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
     const roles = {
       'OWNER': 'Propietario',
       'ADMIN': 'Administrador',
-      'MEMBER': 'Miembro',
-      'VIEWER': 'Visualizador'
+      'MEMBER': 'Miembro'
     };
     return roles[role] || role;
   };
@@ -115,8 +114,7 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
     const colors = {
       'OWNER': '#9c27b0',
       'ADMIN': '#f44336',
-      'MEMBER': '#2196f3',
-      'VIEWER': '#4caf50'
+      'MEMBER': '#2196f3'
     };
     return colors[role] || '#666';
   };
@@ -264,7 +262,6 @@ export default function ProjectMemberManager({ projectId, token, ownerId, isOwne
                         <option value="">Seleccionar rol...</option>
                         <option value="ADMIN">Administrador</option>
                         <option value="MEMBER">Miembro</option>
-                        <option value="VIEWER">Visualizador</option>
                       </select>
                       <button
                         onClick={() => handleUpdateRole(member.id)}
